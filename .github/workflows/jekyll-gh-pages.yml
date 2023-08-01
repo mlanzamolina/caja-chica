@@ -1,29 +1,47 @@
-name: Build and Deploy React to GitHub Pages
+
+name: Deploy React App
+
 on:
   push:
     branches:
       - master
 
-permissions:
-  contents: read
-  packages: write
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v1
         with:
           node-version: 18
+
       - name: Install dependencies
         run: npm install
-      - name: Build React app
+
+      - name: Build app
         run: npm run build
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4.4.3
+
+      - name: Add permissions for read and write
+        run: chmod +rw ./build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
         with:
-          branch: gh-pages
-          folder: build
-          clean: true
+          name: build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3.9.3
+        with:
+          deploy_key: ${{ secrets.CAJA_CHICA }}
+          cname: caja-chica-msps.com
+          commit_message: 'Deploy to GitHub Pages'
+          user_name: 'mlanzamolina'
+          user_email: 'mlanzamolina@gmail.com'
+          publish_dir: ./build
