@@ -22,3 +22,7 @@ jobs:
           uses: JamesIves/github-pages-deploy-action@v4
           with:
             folder: build # The folder the action should deploy.
+
+        - name: Print Webpage URL
+          run: | 
+            echo "Webpage URL: ${{ steps.deploy.outputs.url }}"
