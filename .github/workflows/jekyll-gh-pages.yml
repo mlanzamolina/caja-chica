@@ -36,8 +36,8 @@ jobs:
           name: build
 
       - name: Deploy to GitHub Pages
-        uses: github/pages-deploy-action@v4
+        uses: gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: ./build
+          token: ${{ secrets.CAJA_CHICA }}
+          publish-dir: ./build
+          force-push: true
