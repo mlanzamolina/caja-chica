@@ -41,8 +41,11 @@ jobs:
           npm run build
           echo "Build completed" 
 
-      - name: Deploy React app
-        run: npm run deploy
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+           github_token: ${{ secrets.PERSON_ACCESS_TOKEN_FOR_PUSH_TO_GH_PAGES_BRANCH }}
+           publish_dir: ./build
 
   deployment:
     needs: build
