@@ -36,7 +36,7 @@ jobs:
           name: build
 
       - name: Deploy to GitHub Pages
-        uses: gh-pages@v3
+        uses: github/pages-deploy-action@v4
         with:
           token: ${{ secrets.CAJA_CHICA }}
           publish-dir: ./build
