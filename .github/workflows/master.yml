@@ -37,16 +37,13 @@ jobs:
         run: npm install
 
       - name: Build React app
-        run: npm run build
-
-      - name: Create gh-pages branch
-        run: git checkout -b gh-pages
-
-      - name: Deploy React app
         run: |
-          git config --global user.name "Marco Lanza"
-          git config --global user.email "mlanzamolina@gmail.com"
-          npm run deploy
+          npm run build
+          ECHO "Build completed" 
+          ls
+          
+      - name: Deploy React app
+        run: npm run deploy
 
   deployment:
     needs: build
