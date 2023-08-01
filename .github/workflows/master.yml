@@ -40,7 +40,7 @@ jobs:
         run: npm run build
 
       - name: Create gh-pages branch
-        run: git checkout -b gh-pages-build
+        run: git checkout -b gh-pages
 
       - name: Deploy React app
         run: |
