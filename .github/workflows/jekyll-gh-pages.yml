@@ -23,3 +23,5 @@ jobs:
           branch: gh-pages
           folder: build
           clean: true
+      - name: Set deployment URL
+        run: echo "URL=https://mlanzamolina.github.io/caja-chica/" >> $GITHUB_ENV
