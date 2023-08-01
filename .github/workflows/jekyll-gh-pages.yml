@@ -3,7 +3,7 @@ name: Deploy React App
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -23,9 +23,6 @@ jobs:
       - name: Build app
         run: npm run build
 
-      - name: Add permissions for read and write
-        run: chmod +rw ./build
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -36,8 +33,8 @@ jobs:
           name: build
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/gh-pages@v3
+        uses: gh-pages@v3
         with:
-          token: ${{ secrets.CAJA_CHICA }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           publish-dir: ./build
           force-push: true
