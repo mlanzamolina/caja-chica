@@ -1,0 +1,9 @@
+{
+    "appId": "caja-chica-pqain",
+    "appUrl": "https://realm.mongodb.com/groups/64c439eb9473f01fba108aaf/apps/64c43b5f13aa56de3f40739a",
+    "baseUrl": "https://realm.mongodb.com",
+    "clientApiBaseUrl": "https://eastus2.azure.realm.mongodb.com",
+    "dataApiBaseUrl": "https://eastus2.azure.data.mongodb-api.com",
+    "dataExplorerLink": "https://cloud.mongodb.com/links/64c439eb9473f01fba108aaf/explorer/Cluster0/database/collection/find",
+    "dataSourceName": "mongodb-atlas"
+}
