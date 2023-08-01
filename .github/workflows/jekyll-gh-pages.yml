@@ -38,6 +38,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/gh-pages@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.CAJA_CHICA }}
           publish-dir: ./build
           force-push: true
