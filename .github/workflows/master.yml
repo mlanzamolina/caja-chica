@@ -36,19 +36,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Config git
-        run: |
-          git config --global user.name "Marco Lanza"
-          git config --global user.email "mlanzamolina@gmail.com"
-
       - name: Build React app
         run: npm run build
 
       - name: Create gh-pages branch
-        run: git checkout -b gh-pages
+        run: git checkout -b gh-pages-build
 
       - name: Deploy React app
-        run: npm run deploy
+        run: |
+          git config --global user.name "Marco Lanza"
+          git config --global user.email "mlanzamolina@gmail.com"
+          npm run deploy
 
   deployment:
     needs: build
