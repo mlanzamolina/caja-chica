@@ -1,11 +1,12 @@
+
 name: GitHub Pages
 
-#on master and gh-pages branch
 on:
   push:
     branches:
       - master
       - gh-pages
+  pull_request:
 
 jobs:
   deploy:
@@ -31,7 +32,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
       - run: npm ci
       - run: npm run build
 
@@ -40,4 +40,4 @@ jobs:
         if: github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./
