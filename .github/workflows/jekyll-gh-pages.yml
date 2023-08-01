@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
+      packages: write
+      pull-requests: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
@@ -34,7 +36,7 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         with:
           github_token: ${{ secrets.CAJA_CHICA }}
-          publish_dir: ./public
+          publish_dir: ./build
