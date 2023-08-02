@@ -20,7 +20,7 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "git add . && git commit -m 'deploy' && git push origin master",
+    "deploy": "npm run format && git add . && git commit -m 'deploy' && git push origin master",
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",

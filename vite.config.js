@@ -4,10 +4,10 @@ import react from "@vitejs/plugin-react";
 import topLevelAwait from "vite-plugin-top-level-await";
 
 export default defineConfig({
-  base: '/caja-chica/',
+  base: "/caja-chica/",
   plugins: [react(), topLevelAwait()],
   build: {
-    outDir: "build"
+    outDir: "build",
   },
   server: {
     open: true,
