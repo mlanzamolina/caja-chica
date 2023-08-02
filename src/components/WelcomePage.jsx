@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import * as Realm from "realm-web";
 import { useApp } from "./RealmApp";
 import {
@@ -21,7 +21,7 @@ export function WelcomePage() {
   const app = useApp();
 
   // Track whether the user is logging in or signing up for a new account
-  const [isSignup, setIsSignup] = React.useState(false);
+  const [isSignup, setIsSignup] = useState(false);
   const toggleIsSignup = () => {
     clearErrors();
     setIsSignup(toggleBoolean);
@@ -32,7 +32,7 @@ export function WelcomePage() {
     password: null,
     other: null,
   };
-  const [error, setError] = React.useState(noErrors);
+  const [error, setError] = useState(noErrors);
   const clearErrors = () => setError(noErrors);
   const NonAuthErrorAlert = useErrorAlert({
     error: error.other,
@@ -41,7 +41,7 @@ export function WelcomePage() {
     },
   });
   // Manage password visibility
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword(toggleBoolean);
 
   const onFormSubmit = async ({ email, password }) => {
@@ -75,6 +75,7 @@ export function WelcomePage() {
   useEffect(() => {
     if (token !== "" && tokenId !== "") {
       handleConfirm();
+      console.log(token, tokenId);
     }
   }, [handleConfirm, token, tokenId]);
 
