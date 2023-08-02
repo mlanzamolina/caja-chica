@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [react(), topLevelAwait()],
   build: {
     outDir: "build",
+    base: "/caja-chica"
   },
   server: {
     open: true,
