@@ -99,7 +99,7 @@ export function WelcomePage() {
           }}
         >
           <Typography component="h2" variant="h4">
-            Welcome automation!
+            Welcome automation v1!
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
             {isSignup

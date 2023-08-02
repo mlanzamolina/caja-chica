@@ -27433,7 +27433,7 @@ Error generating stack: ` +
                 R(Gt, {
                   component: "h2",
                   variant: "h4",
-                  children: "Welcome automation!",
+                  children: "Welcome automation v1!",
                 }),
                 R(Gt, {
                   variant: "subtitle1",
