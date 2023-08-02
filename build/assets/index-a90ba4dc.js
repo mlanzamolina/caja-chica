@@ -26980,10 +26980,10 @@ Error generating stack: ` +
         try {
           t &&
             (await e.emailPasswordAuth.registerUser({
-              email: `${v}@sanpedrosula.hn`,
+              email: `${v}`,
               password: g,
             })),
-            await e.logIn(Qt.emailPassword(`${v}@sanpedrosula.hn`, g));
+            await e.logIn(Qt.emailPassword(`${v}`, g));
         } catch (x) {
           j_(x, a);
         }

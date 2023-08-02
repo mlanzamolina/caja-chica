@@ -49,13 +49,11 @@ export function WelcomePage() {
     try {
       if (isSignup) {
         await app.emailPasswordAuth.registerUser({
-          email: `${email}@sanpedrosula.hn`,
+          email: `${email}`,
           password,
         });
       }
-      await app.logIn(
-        Realm.Credentials.emailPassword(`${email}@sanpedrosula.hn`, password),
-      );
+      await app.logIn(Realm.Credentials.emailPassword(`${email}`, password));
     } catch (err) {
       handleAuthenticationError(err, setError);
     }

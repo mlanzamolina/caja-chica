@@ -7,6 +7,8 @@ import { AppName } from "./AppName";
 import atlasConfig from "../atlasConfig.json";
 import "./App.css";
 const { appId } = atlasConfig;
+//import { BrowserRouter, Route, Switch } from "react-router-dom";
+//import { ConfirmEmail } from "./ConfirmEmail";
 
 export default function ProvidedApp() {
   return (
