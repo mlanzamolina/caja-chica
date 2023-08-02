@@ -22,7 +22,7 @@ export function DraftTodoItem({ todo, todoActions, draftTodoActions }) {
       <ListItemText inset>
         <TextField
           style={{ width: "100%" }}
-          placeholder="What needs doing?"
+          placeholder="Ingresar evento?"
           size="small"
           value={todo.data.summary}
           onChange={(e) => {
@@ -33,7 +33,7 @@ export function DraftTodoItem({ todo, todoActions, draftTodoActions }) {
       <ListItemText inset>
         <TextField
           style={{ width: "100%" }}
-          placeholder="lps?"
+          placeholder="Cuanto ocupamos?"
           size="small"
           value={todo.data.price}
           onChange={(e) => {

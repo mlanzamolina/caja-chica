@@ -28198,7 +28198,7 @@ Error generating stack: ` +
           inset: !0,
           children: R(Pl, {
             style: { width: "100%" },
-            placeholder: "What needs doing?",
+            placeholder: "Ingresar evento?",
             size: "small",
             value: e.data.summary,
             onChange: (r) => {
@@ -28210,7 +28210,7 @@ Error generating stack: ` +
           inset: !0,
           children: R(Pl, {
             style: { width: "100%" },
-            placeholder: "lps?",
+            placeholder: "Cuanto ocupamos?",
             size: "small",
             value: e.data.price,
             onChange: (r) => {
