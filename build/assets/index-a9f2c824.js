@@ -27403,11 +27403,9 @@ Error generating stack: ` +
           const h = await Kb.parse(window.location.search);
           h.token &&
             h.tokenId &&
-            (console.log(h.token),
-            console.log(h.tokenId),
-            b(h.token),
+            (b(h.token),
             _(h.tokenId),
-            await e.emailPasswordAuth.confirmEmail(h.token, h.tokenId));
+            await e.emailPasswordAuth.confirmUser(h.token, h.tokenId));
         } catch (h) {
           console.error(h);
         }

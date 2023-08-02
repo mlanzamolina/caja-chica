@@ -68,11 +68,11 @@ export function WelcomePage() {
     try {
       const urlParams = await queryString.parse(window.location.search);
       if (urlParams.token && urlParams.tokenId) {
-        console.log(urlParams.token);
-        console.log(urlParams.tokenId);
+        // console.log(urlParams.token);
+        // console.log(urlParams.tokenId);
         setToken(urlParams.token);
         setTokenId(urlParams.tokenId);
-        await app.emailPasswordAuth.confirmEmail(
+        await app.emailPasswordAuth.confirmUser(
           urlParams.token,
           urlParams.tokenId,
         );
