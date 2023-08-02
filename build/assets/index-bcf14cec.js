@@ -27387,10 +27387,11 @@ Error generating stack: ` +
         try {
           t &&
             (await e.emailPasswordAuth.registerUser({
-              email: `${h}`,
+              email: `${h}@sanpedrosula.hn`,
               password: g,
-            })),
-            await e.logIn(Zt.emailPassword(`${h}`, g));
+            }),
+            console.log("Sending email to verify account.")),
+            await e.logIn(Zt.emailPassword(`${h}@sanpedrosula.hn`, g));
         } catch (x) {
           gR(x, a);
         }
@@ -27512,10 +27513,7 @@ Error generating stack: ` +
   }
   function gR(e, t) {
     const n = () => {
-      t((r) => ({
-        ...r,
-        other: "Something went wrong. Try again in a little bit.",
-      })),
+      t((r) => ({ ...r, other: "Verification email sent." })),
         console.warn(
           "Something went wrong with a login or signup request. See the following error for details.",
         ),

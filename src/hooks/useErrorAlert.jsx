@@ -12,6 +12,13 @@ export function ErrorAlert({ isOpen, message, onClose = () => {} }) {
     </Alert>
   ) : null;
 }
+export function InfoAlert({ isOpen, message, onClose = () => {} }) {
+  return isOpen ? (
+    <Alert onClose={onClose} severity="info">
+      {message}
+    </Alert>
+  ) : null;
+}
 
 export function useErrorAlert({ error, clearError, hideAfterMs }) {
   const [showErrorAlert, setShowErrorAlert] = React.useState(false);
@@ -42,6 +49,40 @@ export function useErrorAlert({ error, clearError, hideAfterMs }) {
       message={error}
       onClose={() => {
         clearErrorAlert();
+      }}
+    />
+  );
+}
+
+export function useInfoAlert({ message, clearMessage, hideAfterMs }) {
+  const [showInfoAlert, setShowInfoAlert] = React.useState(false);
+  const clearInfoAlert = React.useCallback(() => {
+    clearMessage();
+    setShowInfoAlert(false);
+  }, [clearMessage]);
+
+  React.useEffect(() => {
+    if (message) {
+      setShowInfoAlert(true);
+      if (hideAfterMs) {
+        const timeout = setTimeout(() => {
+          clearInfoAlert();
+        }, hideAfterMs);
+        return () => {
+          clearTimeout(timeout);
+        };
+      }
+    } else {
+      setShowInfoAlert(false);
+    }
+  }, [message, clearInfoAlert, hideAfterMs]);
+
+  return () => (
+    <InfoAlert
+      isOpen={showInfoAlert}
+      message={message}
+      onClose={() => {
+        clearInfoAlert();
       }}
     />
   );

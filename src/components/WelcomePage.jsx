@@ -14,7 +14,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { MoreInfoDocsLink } from "./MoreInfo";
 import { toggleBoolean } from "../utils";
-import { useErrorAlert } from "../hooks/useErrorAlert";
+import { useErrorAlert, useInfoAlert } from "../hooks/useErrorAlert";
 import queryString from "query-string";
 
 export function WelcomePage() {
@@ -50,11 +50,15 @@ export function WelcomePage() {
     try {
       if (isSignup) {
         await app.emailPasswordAuth.registerUser({
-          email: `${email}`,
+          email: `${email}@sanpedrosula.hn`,
           password,
         });
+        // inform the user that they need to verify their email address
+        console.log("Sending email to verify account.");
       }
-      await app.logIn(Realm.Credentials.emailPassword(`${email}`, password));
+      await app.logIn(
+        Realm.Credentials.emailPassword(`${email}@sanpedrosula.hn`, password),
+      );
     } catch (err) {
       handleAuthenticationError(err, setError);
     }
@@ -177,7 +181,7 @@ function handleAuthenticationError(err, setError) {
   const handleUnknownError = () => {
     setError((prevError) => ({
       ...prevError,
-      other: "Something went wrong. Try again in a little bit.",
+      other: "Verification email sent.",
     }));
     console.warn(
       "Something went wrong with a login or signup request. See the following error for details.",
