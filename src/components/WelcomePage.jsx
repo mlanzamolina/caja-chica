@@ -61,23 +61,30 @@ export function WelcomePage() {
   };
 
   const urlParams = queryString.parse(window.location.search);
-  const [token, setToken] = useState(urlParams.token || "");
-  const [tokenId, setTokenId] = useState(urlParams.tokenId || "");
+  const [token, setToken] = useState("");
+  const [tokenId, setTokenId] = useState("");
 
   const handleConfirm = useCallback(async () => {
     try {
-      await app.emailPasswordAuth.confirmEmail(token, tokenId);
+      const urlParams = await queryString.parse(window.location.search);
+      if (urlParams.token && urlParams.tokenId) {
+        console.log(urlParams.token);
+        console.log(urlParams.tokenId);
+        setToken(urlParams.token);
+        setTokenId(urlParams.tokenId);
+        await app.emailPasswordAuth.confirmEmail(
+          urlParams.token,
+          urlParams.tokenId,
+        );
+      }
     } catch (error) {
       console.error(error);
     }
   }, [app.emailPasswordAuth, token, tokenId]);
 
   useEffect(() => {
-    if (token !== "" && tokenId !== "") {
-      handleConfirm();
-      console.log(token, tokenId);
-    }
-  }, [handleConfirm, token, tokenId]);
+    handleConfirm();
+  }, []);
 
   return (
     <Container maxWidth="sm" className="main-container">
