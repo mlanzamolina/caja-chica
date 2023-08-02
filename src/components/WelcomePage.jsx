@@ -43,14 +43,19 @@ export function WelcomePage() {
   const [showPassword, setShowPassword] = React.useState(false);
   const toggleShowPassword = () => setShowPassword(toggleBoolean);
 
-  const onFormSubmit = async ({ _email, password }) => {
-    const email = _email + "@sanpedrosula.hn";
+  const onFormSubmit = async ({ email, password }) => {
+    console.log(`${email}@sanpedrosula.hn`);
     clearErrors();
     try {
       if (isSignup) {
-        await app.emailPasswordAuth.registerUser({ email, password });
+        await app.emailPasswordAuth.registerUser({
+          email: `${email}@sanpedrosula.hn`,
+          password,
+        });
       }
-      await app.logIn(Realm.Credentials.emailPassword(email, password));
+      await app.logIn(
+        Realm.Credentials.emailPassword(`${email}@sanpedrosula.hn`, password),
+      );
     } catch (err) {
       handleAuthenticationError(err, setError);
     }
@@ -69,7 +74,7 @@ export function WelcomePage() {
           }}
         >
           <Typography component="h2" variant="h4">
-            Welcome!
+            Welcome automation!
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
             {isSignup
