@@ -15,6 +15,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { MoreInfoDocsLink } from "./MoreInfo";
 import { toggleBoolean } from "../utils";
 import { useErrorAlert } from "../hooks/useErrorAlert";
+import queryString from "query-string";
 
 export function WelcomePage() {
   const app = useApp();
@@ -58,6 +59,24 @@ export function WelcomePage() {
       handleAuthenticationError(err, setError);
     }
   };
+
+  const urlParams = queryString.parse(window.location.search);
+  const [token, setToken] = useState(urlParams.token || "");
+  const [tokenId, setTokenId] = useState(urlParams.tokenId || "");
+
+  const handleConfirm = useCallback(async () => {
+    try {
+      await app.emailPasswordAuth.confirmEmail(token, tokenId);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [app.emailPasswordAuth, token, tokenId]);
+
+  useEffect(() => {
+    if (token !== "" && tokenId !== "") {
+      handleConfirm();
+    }
+  }, [handleConfirm, token, tokenId]);
 
   return (
     <Container maxWidth="sm" className="main-container">
