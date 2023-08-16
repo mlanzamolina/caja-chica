@@ -10,6 +10,7 @@ import {
   removeValueAtIndex,
   getTodoIndex,
 } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 const { dataSourceName } = atlasConfig;
 
@@ -18,13 +19,38 @@ export function useTodos() {
   const app = useApp();
   const [todos, setTodos] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
+  const navigate = useNavigate();
 
-  // Get a client object for the todo item collection
-  const todoItemCollection = useCollection({
-    cluster: dataSourceName,
-    db: "todo",
-    collection: "Item",
-  });
+  const currentProjectName = window.env.REACT_APP_NAME;
+  const currentProjectMetadata = window.env.REACT_APP_PROJECTS.find(
+    (project) => project.name === currentProjectName,
+  );
+
+  if (!currentProjectMetadata) {
+    console.error(`Metadata not found for project: ${currentProjectName}`);
+    return;
+  }
+
+  const { db, collection } = currentProjectMetadata;
+
+  let todoItemCollection;
+
+  try {
+    todoItemCollection = useCollection({
+      cluster: dataSourceName,
+      db,
+      collection,
+    });
+  } catch (error) {
+    console.error("Error while creating the collection:", error);
+    // Handle the error here, you might want to display an error message to the user
+    // or take any other necessary action.
+    // You can also set `todoItemCollection` to a default value in case of an error.
+    todoItemCollection = null; // Or any other default value
+    Navigate("/");
+  }
+
+  // Now you can use `todoItemCollection` safely, whether it was successfully created or not.
 
   // Fetch all todos on load and whenever our collection changes (e.g. if the current user changes)
   React.useEffect(() => {

@@ -20,6 +20,9 @@ export function MoreInfoDocsLink() {
         {"CaJa Chica Area Ingenieria de Software, codigo fuente del frontend: "}
       </span>{" "}
       |{" "}
+      <Link target="_blank" href="https://github.com/mlanzamolina/caja-chica">
+        caja-chica
+      </Link>
       <Link target="_blank" href={docsLink}>
         Docs
       </Link>

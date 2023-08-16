@@ -10,14 +10,25 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { MoreInfoDocsLink } from "./MoreInfo";
 import { toggleBoolean } from "../utils";
 import { useErrorAlert, useInfoAlert } from "../hooks/useErrorAlert";
 import queryString from "query-string";
+import Logo from "./../assets/logo.svg";
+import LogoWithBuilding from "./../assets/logoWithBuilding.svg";
+import { useNavigate } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+const theme = createTheme();
 export function WelcomePage() {
+  const { currentUser } = useApp();
+  const navigate = useNavigate();
+  if (currentUser) navigate("/admin");
   const app = useApp();
 
   // Track whether the user is logging in or signing up for a new account
@@ -59,6 +70,8 @@ export function WelcomePage() {
       await app.logIn(
         Realm.Credentials.emailPassword(`${email}@sanpedrosula.hn`, password),
       );
+      // console.log("Logged in!"); route to /admin
+      navigate("/admin");
     } catch (err) {
       handleAuthenticationError(err, setError);
     }
@@ -91,89 +104,153 @@ export function WelcomePage() {
   }, []);
 
   return (
-    <Container maxWidth="sm" className="main-container">
-      <Card className="auth-card" variant="outlined">
-        <form
-          className="auth-form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            const formData = new FormData(e.target);
-            const { email, password } = Object.fromEntries(formData.entries());
-            onFormSubmit({ email, password });
+    <ThemeProvider theme={theme}>
+      {/* height 100vh and hide scroll in sx */}
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundRepeat: "no-repeat",
+            backgroundColor: "#003013",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
           }}
         >
-          <Typography component="h2" variant="h4">
-            Welcome automation v1!
-          </Typography>
-          <Typography variant="subtitle1" gutterBottom>
-            {isSignup
-              ? "Enter your email and a password to create a new account."
-              : "Enter your email and a password to log in with an existing account."}
-          </Typography>
-          <NonAuthErrorAlert />
-          <div className="email-and-domain">
-            <TextField
-              id="input-email"
-              name="email"
-              label="Email Address"
-              variant="outlined"
-              error={Boolean(error.email)}
-              helperText={error.email ?? ""}
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="100%"
+          >
+            <img
+              src={LogoWithBuilding}
+              alt="Example SVG"
+              style={{ width: "75%", height: "auto" }}
             />
-            <Typography variant="caption" gutterBottom>
-              <br />
-              @sanpedrosula.hn
-            </Typography>
-          </div>
-          <TextField
-            id="input-password"
-            data-testid="input-password"
-            type={showPassword ? "text" : "password"}
-            name="password"
-            label="Password"
-            variant="outlined"
-            error={Boolean(error.password)}
-            helperText={error.password ?? ""}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={toggleShowPassword}
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                    }}
-                    size="large"
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              ),
+          </Box>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          component={Paper}
+          elevation={10}
+          square
+        >
+          <Box
+            sx={{
+              my: 1,
+              mx: 13,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
-          />
-          <Button
-            id="submit-button"
-            data-testid="submit-button"
-            type="submit"
-            variant="contained"
-            color="primary"
           >
-            {isSignup ? "Create Account" : "Log In"}
-          </Button>
-          <button
-            id="toggle-auth-type-button"
-            type="button"
-            className="link-button"
-            onClick={() => toggleIsSignup()}
-          >
-            {isSignup
-              ? "Already have an account? Log In"
-              : "Sign up for an account"}
-          </button>
-        </form>
-      </Card>
-      <MoreInfoDocsLink />
-    </Container>
+            <Typography component="h1" variant="h5">
+              <div>
+                <img src={Logo} alt="Example SVG" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 100 100"
+                  style={{ width: "10%", height: "10%" }}
+                >
+                  <use xlinkHref={Logo} />
+                </svg>
+              </div>
+            </Typography>
+            <Container maxWidth="sm" className="main-container">
+              <Card className="auth-card" variant="outlined">
+                <form
+                  className="auth-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    const formData = new FormData(e.target);
+                    const { email, password } = Object.fromEntries(
+                      formData.entries(),
+                    );
+                    onFormSubmit({ email, password });
+                  }}
+                >
+                  <Typography component="h2" variant="h4">
+                    Welcome automation v1!
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {isSignup
+                      ? "Enter your email and a password to create a new account."
+                      : "Enter your email and a password to log in with an existing account."}
+                  </Typography>
+                  <NonAuthErrorAlert />
+                  <div className="email-and-domain">
+                    <TextField
+                      id="input-email"
+                      name="email"
+                      label="Email Address"
+                      variant="outlined"
+                      error={Boolean(error.email)}
+                      helperText={error.email ?? ""}
+                    />
+                    <Typography variant="caption" gutterBottom>
+                      <br />
+                      @sanpedrosula.hn
+                    </Typography>
+                  </div>
+                  <TextField
+                    id="input-password"
+                    data-testid="input-password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    label="Password"
+                    variant="outlined"
+                    error={Boolean(error.password)}
+                    helperText={error.password ?? ""}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={toggleShowPassword}
+                            onMouseDown={(e) => {
+                              e.preventDefault();
+                            }}
+                            size="large"
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <Button
+                    id="submit-button"
+                    data-testid="submit-button"
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    {isSignup ? "Create Account" : "Log In"}
+                  </Button>
+                  <button
+                    id="toggle-auth-type-button"
+                    type="button"
+                    className="link-button"
+                    onClick={() => toggleIsSignup()}
+                  >
+                    {isSignup
+                      ? "Already have an account? Log In"
+                      : "Sign up for an account"}
+                  </button>
+                </form>
+              </Card>
+              {/* <MoreInfoDocsLink /> */}
+            </Container>
+          </Box>
+        </Grid>
+      </Grid>
+    </ThemeProvider>
   );
 }
 

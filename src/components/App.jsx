@@ -1,3 +1,4 @@
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { AppBar, Toolbar, Button, Typography } from "@mui/material";
 import { WelcomePage } from "./WelcomePage";
 import { TodoItemsPage } from "./TodoItemsPage";
@@ -7,40 +8,49 @@ import { AppName } from "./AppName";
 import atlasConfig from "../atlasConfig.json";
 import "./App.css";
 const { appId } = atlasConfig;
-//import { BrowserRouter, Route, Switch } from "react-router-dom";
-//import { ConfirmEmail } from "./ConfirmEmail";
 
 export default function ProvidedApp() {
   return (
-    <ThemeProvider>
-      <AppProvider appId={appId}>
-        <App />
-      </AppProvider>
-    </ThemeProvider>
+    <BrowserRouter>
+      <ThemeProvider>
+        <AppProvider appId={appId}>
+          <App />
+        </AppProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
 function App() {
   const { currentUser, logOut } = useApp();
+
+  const navigate = useNavigate();
   return (
     <div className="App">
-      <AppBar position="sticky">
-        <Toolbar>
-          <AppName />
-          {currentUser ? (
+      {currentUser && (
+        <AppBar position="sticky">
+          <Toolbar>
+            <AppName />
             <Button
               variant="contained"
               color="secondary"
               onClick={async () => {
                 await logOut();
+                navigate("/");
               }}
             >
               <Typography variant="button">Log Out</Typography>
             </Button>
-          ) : null}
-        </Toolbar>
-      </AppBar>
-      {currentUser ? <TodoItemsPage /> : <WelcomePage />}
+          </Toolbar>
+        </AppBar>
+      )}
+      <Routes>
+        <Route path="/" element={<WelcomePage />} />
+        <Route
+          path={`/admin`}
+          element={<TodoItemsPage project={window.env.REACT_APP_NAME} />}
+        />
+      </Routes>
     </div>
   );
 }

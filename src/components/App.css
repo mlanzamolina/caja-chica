@@ -2,8 +2,6 @@
   box-sizing: border-box;
   margin: 0;
   background: white;
-  height: 100vh;
-  overflow-y: scroll;
 }
 
 .App-logo {
@@ -55,4 +53,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.login-container{
+  overflow: hidden;
 }
