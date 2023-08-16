@@ -28193,8 +28193,8 @@ Error generating stack: ` +
         { value: "Module" },
       ),
     ),
-    V1 = "/assets/logo-992687eb.svg",
-    HP = "/assets/logoWithBuilding-3a468530.svg",
+    V1 = "/caja-chica/assets/logo-992687eb.svg",
+    HP = "/caja-chica/assets/logoWithBuilding-3a468530.svg",
     qP = uu();
   function GP() {
     const { currentUser: e } = fi(),
@@ -30287,7 +30287,7 @@ Error generating stack: ` +
         border: 1px solid #ccc;
         border-radius: 3px;
       }
-      & > input[type='checkbox'] {
+      & > input[type="checkbox"] {
         margin-top: 7px;
       }
       & > span {
@@ -30314,10 +30314,10 @@ Error generating stack: ` +
     }
     button {
       margin: 0 10px;
-      &[type='submit'] {
+      &[type="submit"] {
         ${Z_};
       }
-      &[type='button'] {
+      &[type="button"] {
         ${X_};
       }
     }
@@ -32940,6 +32940,7 @@ Error generating stack: ` +
   const { appId: g$ } = th;
   function v$() {
     return A(wk, {
+      basename: "/caja-chica",
       children: A(h$, { children: A(gP, { appId: g$, children: A(y$, {}) }) }),
     });
   }
@@ -32980,7 +32981,7 @@ Error generating stack: ` +
   }
   const b$ = "modulepreload",
     w$ = function (e) {
-      return "/" + e;
+      return "/caja-chica/" + e;
     },
     Qw = {},
     S$ = function (e, t, n) {

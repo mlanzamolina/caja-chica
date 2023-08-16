@@ -11,7 +11,7 @@ const { appId } = atlasConfig;
 
 export default function ProvidedApp() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/caja-chica">
       <ThemeProvider>
         <AppProvider appId={appId}>
           <App />
