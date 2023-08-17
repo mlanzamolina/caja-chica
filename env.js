@@ -23,4 +23,6 @@ window.env = {
       collection: "collection-ejemplo",
     },
   ],
+  //validacion si permite ver la lista de proyectos y si permite seleccionar un proyecto
+  REACT_APP_PROJECT_LIST: true,
 };
