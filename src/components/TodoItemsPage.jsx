@@ -33,7 +33,7 @@ export function TodoItemsPage({ project }) {
   return (
     <>
       {currentUser ? (
-        <Container className="main-container" maxWidth="sm">
+        <Container className="main-container">
           {renderProjectContent()}
         </Container>
       ) : (

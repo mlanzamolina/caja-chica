@@ -4,7 +4,6 @@ const btn = (light, dark) => css`
   white-space: nowrap;
   display: inline-block;
   border-radius: 5px;
-  padding: 5px 15px;
   font-size: 16px;
   color: white;
   &:visited {
@@ -53,10 +52,8 @@ export default styled.div`
   }
 
   form {
-    max-width: 500px;
-    margin: 10px auto;
+    max-width: 100%;
     border: 1px solid #ccc;
-    padding: 20px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     border-radius: 3px;
 
@@ -76,7 +73,6 @@ export default styled.div`
       & > select,
       & > textarea {
         flex: 1;
-        padding: 3px 5px;
         font-size: 1em;
         margin-left: 15px;
         border: 1px solid #ccc;
@@ -92,13 +88,7 @@ export default styled.div`
         font-weight: bold;
       }
       & > div {
-        margin-left: 16px;
-        & > label {
-          display: block;
-          & > input {
-            margin-right: 3px;
-          }
-        }
+        justify-content: center;
       }
     }
     & > .buttons {
@@ -121,7 +111,6 @@ export default styled.div`
       border: 1px solid #ccc;
       background: rgba(0, 0, 0, 0.1);
       box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
-      padding: 20px;
     }
   }
 `;

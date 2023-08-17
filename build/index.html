@@ -25,26 +25,7 @@
           .confirmUser({ token, tokenId })
           .then(() => null)
           .catch((err) => console.log(err));
-      } else {
-        console.log("error", "Missing token or tokenId in URL parameters rerouting to login");
-        //perform logout and redirect to login
-        //app.currentUser?.logOut();
-        //delete local storage all
-        
-        //window.location.href = "/";
       }
-      //Display Message depending on result
-      // function displayResult(result, err) {
-      //  const message = document.getElementById("message");
-       // if (result === "success") {
-      //    message.innerText =
-      //      "Your E-mail address has been verified.\n\n You may close this page. Thank you.";
-     //   } else if (result === "error") {
-       //   message.innerText =
-      //      "Unable to register this user. Please try again to register. " +
-       //     err;
-     //   }
-    //  } 
     </script>
 
     <script src="env.js"></script>
@@ -52,7 +33,7 @@
     <script>
       document.title = window.env.REACT_APP_NAME;
     </script>
-    <script type="module" crossorigin src="/caja-chica/assets/index-4f51aa0f.js"></script>
+    <script type="module" crossorigin src="/caja-chica/assets/index-1636915d.js"></script>
     <link rel="stylesheet" href="/caja-chica/assets/index-fada345c.css">
   </head>
   <body>

@@ -23,13 +23,15 @@ import Logo from "./../assets/logo.svg";
 import LogoWithBuilding from "./../assets/logoWithBuilding.svg";
 import { useNavigate } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+//import fs from "fs";
 
 const theme = createTheme();
 export function WelcomePage() {
   const { currentUser } = useApp();
   const navigate = useNavigate();
-  if (currentUser) navigate("/admin");
   const app = useApp();
+  if (currentUser) navigate("/admin");
 
   // Track whether the user is logging in or signing up for a new account
   const [isSignup, setIsSignup] = useState(false);
@@ -99,9 +101,30 @@ export function WelcomePage() {
     }
   }, [app.emailPasswordAuth, token, tokenId]);
 
+  const initialProjectId = localStorage.getItem("REACT_APP_NAME")
+    ? localStorage.getItem("REACT_APP_NAME")
+    : window.env.REACT_APP_NAME;
+  // console.log(initialProjectId);
+  const [selectedProject, setSelectedProject] = useState(
+    initialProjectId || window.env.REACT_APP_NAME,
+  );
+  // console.log(selectedProject);
+
   useEffect(() => {
-    handleConfirm();
-  }, []);
+    const project = window.env.REACT_APP_PROJECTS.find(
+      (project) => project.id === selectedProject,
+    );
+    if (project) {
+      window.env.REACT_APP_NAME = project.name;
+      localStorage.setItem("REACT_APP_NAME", project.name);
+      localStorage.setItem("REACT_APP_DB", project.db);
+      localStorage.setItem("REACT_APP_COLLECTION", project.collection);
+    }
+  }, [selectedProject]);
+
+  const handleProjectChange = (event) => {
+    setSelectedProject(Number(event.target.value));
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -161,8 +184,28 @@ export function WelcomePage() {
                   <use xlinkHref={Logo} />
                 </svg>
               </div>
+              {/* drop downlist of projects if REACT_APP_PROJECTS is true */}
+
+              {window.env.REACT_APP_PROJECT_LIST && (
+                <FormControl sx={{ width: "100%" }}>
+                  <InputLabel id="project-select-label">Project</InputLabel>
+                  <Select
+                    labelId="project-select-label"
+                    id="project-select"
+                    value={selectedProject}
+                    label="Project"
+                    onChange={handleProjectChange}
+                  >
+                    {window.env.REACT_APP_PROJECTS.map((project) => (
+                      <MenuItem key={project.id} value={project.id}>
+                        {project.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              )}
             </Typography>
-            <Container maxWidth="sm" className="main-container">
+            <Container sx={{ width: "100%" }} className="main-container">
               <Card className="auth-card" variant="outlined">
                 <form
                   className="auth-form"
@@ -175,13 +218,10 @@ export function WelcomePage() {
                     onFormSubmit({ email, password });
                   }}
                 >
-                  <Typography component="h2" variant="h4">
-                    Welcome automation v1!
-                  </Typography>
-                  <Typography variant="subtitle1" gutterBottom>
+                  <Typography gutterBottom>
                     {isSignup
-                      ? "Enter your email and a password to create a new account."
-                      : "Enter your email and a password to log in with an existing account."}
+                      ? "Introduzca su correo sin @sanpedrosula.hn y una contraseña para crear una cuenta."
+                      : "Introduzca su correo sin @sanpedrosula.hn y su contraseña para iniciar sesión."}
                   </Typography>
                   <NonAuthErrorAlert />
                   <div className="email-and-domain">
@@ -312,7 +352,6 @@ function handleAuthenticationError(err, setError) {
   } else {
     handleUnknownError();
   }
-  // Only send email if the email address ends in @sanpedrosula.hn
   if (
     errorType === "name already in use" &&
     error.detail.endsWith("@sanpedrosula.hn")

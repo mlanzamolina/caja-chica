@@ -25,26 +25,7 @@
           .confirmUser({ token, tokenId })
           .then(() => null)
           .catch((err) => console.log(err));
-      } else {
-        console.log("error", "Missing token or tokenId in URL parameters rerouting to login");
-        //perform logout and redirect to login
-        //app.currentUser?.logOut();
-        //delete local storage all
-        
-        //window.location.href = "/";
       }
-      //Display Message depending on result
-      // function displayResult(result, err) {
-      //  const message = document.getElementById("message");
-       // if (result === "success") {
-      //    message.innerText =
-      //      "Your E-mail address has been verified.\n\n You may close this page. Thank you.";
-     //   } else if (result === "error") {
-       //   message.innerText =
-      //      "Unable to register this user. Please try again to register. " +
-       //     err;
-     //   }
-    //  } 
     </script>
 
     <script src="env.js"></script>

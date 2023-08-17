@@ -47,7 +47,7 @@ export function useTodos() {
     // or take any other necessary action.
     // You can also set `todoItemCollection` to a default value in case of an error.
     todoItemCollection = null; // Or any other default value
-    Navigate("/");
+    navigate("/");
   }
 
   // Now you can use `todoItemCollection` safely, whether it was successfully created or not.

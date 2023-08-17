@@ -7,6 +7,7 @@ import { ThemeProvider } from "./Theme";
 import { AppName } from "./AppName";
 import atlasConfig from "../atlasConfig.json";
 import "./App.css";
+import EscudoColor from "../assets/ESCUDO COLOR.svg";
 const { appId } = atlasConfig;
 
 export default function ProvidedApp() {
@@ -22,6 +23,7 @@ export default function ProvidedApp() {
 }
 
 function App() {
+  if (!window.env) alert("No se ha encontrado el archivo env.js");
   const { currentUser, logOut } = useApp();
 
   const navigate = useNavigate();
@@ -30,12 +32,18 @@ function App() {
       {currentUser && (
         <AppBar position="sticky">
           <Toolbar>
+            <img
+              src={EscudoColor}
+              alt="Logo"
+              style={{ width: "75px", height: "75px", marginRight: "10px" }}
+            />
             <AppName />
             <Button
               variant="contained"
               color="secondary"
               onClick={async () => {
                 await logOut();
+                localStorage.clear();
                 navigate("/");
               }}
             >
@@ -48,7 +56,14 @@ function App() {
         <Route path="/" element={<WelcomePage />} />
         <Route
           path={`/admin`}
-          element={<TodoItemsPage project={window.env.REACT_APP_NAME} />}
+          element={
+            <TodoItemsPage
+              project={
+                localStorage.getItem("REACT_APP_NAME") ||
+                window.env.REACT_APP_NAME
+              }
+            />
+          }
         />
       </Routes>
     </div>
