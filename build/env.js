@@ -13,7 +13,7 @@ window.env = {
       name: "telehuertos",
       description: "Descripción de telehuertos",
       db: "Telehuertos",
-      collection: "contenido",
+      collection: "file",
     },
     {
       id: 3,

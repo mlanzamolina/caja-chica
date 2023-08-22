@@ -8,8 +8,9 @@ import { useCollection } from "../../hooks/useCollection";
 import atlasConfig from "../../atlasConfig.json";
 const { dataSourceName } = atlasConfig;
 
-export const TelehuertosForm = () => {
-  const [content, setContent] = useState({});
+export const TelehuertosForm = ({ data }) => {
+  const [content, setContent] = useState(data);
+  console.log("data: ", data);
   const collection = useCollection({
     cluster: dataSourceName,
     db: localStorage.getItem("REACT_APP_DB"),
@@ -34,19 +35,20 @@ export const TelehuertosForm = () => {
       console.error(err);
     }
   };
-  useEffect(() => {
-    // find one
-    const findOne = async () => {
-      try {
-        const result = await collection.findOne({ key: "key" });
-        console.log(`Found a document : ${JSON.stringify(result, 0, 2)}`);
-        setContent(result);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    findOne();
-  }, []);
+  // useEffect(() => {
+  //   // find one
+  //   console.log("useEffect: ", data)
+  //   const findOne = async () => {
+  //     try {
+  //       // const result = await collection.findOne({ key: "key" });
+  //       // console.log(`Found a document : ${JSON.stringify(result, 0, 2)}`);
+  //       setContent(data);
+  //     } catch (err) {
+  //       console.error(err);
+  //     }
+  //   };
+  //   findOne();
+  // }, []);
   const required = (value) => (value ? undefined : "Required");
   const MyForm = ({ subscription }) => (
     <Form
