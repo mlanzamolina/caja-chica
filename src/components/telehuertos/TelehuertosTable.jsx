@@ -59,48 +59,56 @@ const headCells = [
     numeric: false,
     disablePadding: true,
     label: "Nombre",
+    sortable: true,
   },
   {
     id: "url",
     numeric: false,
     disablePadding: false,
     label: "Link del archivo",
+    sortable: false,
   },
   {
     id: "created_date",
     numeric: false,
     disablePadding: false,
     label: "Fecha de creacion",
+    sortable: true,
   },
   {
     id: "created_by",
     numeric: false,
     disablePadding: false,
     label: "Creado por",
+    sortable: true,
   },
   {
     id: "modified_date",
     numeric: false,
     disablePadding: false,
     label: "Fecha de modificacion",
+    sortable: true,
   },
   {
     id: "modified_by",
     numeric: false,
     disablePadding: false,
     label: "Modificado por",
+    sortable: true,
   },
   {
     id: "is_active",
     numeric: false,
     disablePadding: false,
     label: "Activo",
+    sortable: true,
   },
   {
     id: "file_type",
     numeric: false,
     disablePadding: false,
     label: "Tipo de archivo",
+    sortable: true,
   },
 ];
 
@@ -172,15 +180,6 @@ export const TelehuertosTable = ({ huertosData, huertosFileType }) => {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [searchValues, setSearchValues] = React.useState({});
-  const handleSearchChange = (event, headId) => {
-    // Prevent the event from propagating to parent elements
-    event.stopPropagation();
-    const { value } = event.target;
-    setSearchValues((prevSearchValues) => ({
-      ...prevSearchValues,
-      [headId]: value,
-    }));
-  };
 
   function EnhancedTableHead(props) {
     const {
@@ -192,8 +191,16 @@ export const TelehuertosTable = ({ huertosData, huertosFileType }) => {
       onRequestSort,
     } = props;
     const createSortHandler = (property) => (event) => {
-      event.stopPropagation();
+      // event.stopPropagation();
       onRequestSort(event, property);
+    };
+    const createSearchHandler = (property) => (event) => {
+      //event.stopPropagation();
+      const { value } = event.target;
+      setSearchValues((prevSearchValues) => ({
+        ...prevSearchValues,
+        [property]: value,
+      }));
     };
 
     return (
@@ -217,26 +224,33 @@ export const TelehuertosTable = ({ huertosData, huertosFileType }) => {
               padding={headCell.disablePadding ? "none" : "normal"}
               sortDirection={orderBy === headCell.id ? order : false}
             >
-              <TableSortLabel
-                active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
-                onClick={createSortHandler(headCell.id)}
-              >
-                {headCell.label}
-                {orderBy === headCell.id ? (
-                  <Box component="span" sx={visuallyHidden}>
-                    {order === "desc"
-                      ? "sorted descending"
-                      : "sorted ascending"}
-                  </Box>
-                ) : null}
-              </TableSortLabel>
-              <input
-                type="text"
-                value={searchValues[headCell.id]}
-                onChange={(event) => handleSearchChange(event, headCell.id)}
-                placeholder=""
-              />
+              {headCell.sortable ? (
+                <>
+                  <TableSortLabel
+                    active={orderBy === headCell.id}
+                    direction={orderBy === headCell.id ? order : "asc"}
+                    onClick={createSortHandler(headCell.id)}
+                  >
+                    {headCell.label}
+                    {orderBy === headCell.id && (
+                      <Box component="span" sx={visuallyHidden}>
+                        {order === "desc"
+                          ? "sorted descending"
+                          : "sorted ascending"}
+                      </Box>
+                    )}
+                  </TableSortLabel>
+                  <input
+                    type="text"
+                    value={searchValues[headCell.id]}
+                    onChange={createSearchHandler(headCell.id)}
+                    autoFocus={searchValues[headCell.id]}
+                    placeholder=""
+                  />
+                </>
+              ) : (
+                headCell.label
+              )}
             </TableCell>
           ))}
         </TableRow>
@@ -245,7 +259,8 @@ export const TelehuertosTable = ({ huertosData, huertosFileType }) => {
   }
 
   const handleRequestSort = (event, property) => {
-    event.stopPropagation();
+    // event.stopPropagation();
+
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
